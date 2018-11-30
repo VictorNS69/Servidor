@@ -1,0 +1,10 @@
+Autor: Victor Nieves Sanchez
+
+Bitacora de trabajo:
+
+30/11/2018
+	Se ha empezado a trabajar en el códgio.
+	Tiempo de trabajo: 3 horas.
+	Nota = 0.
+	Se han cambiado todas las salidas estandar por salida error.
+	Nota = .
