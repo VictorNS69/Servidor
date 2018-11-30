@@ -7,7 +7,7 @@
 
 ## Notas
 
-- lanzador.sh: Un sencillo script de apoyo que permite arrancar una instancia del servidor y toda una batería de clientes que soliciten transferencia de ficheros. 
+- _lanzador.sh_: Un sencillo script de apoyo que permite arrancar una instancia del servidor y toda una batería de clientes que soliciten transferencia de ficheros. 
 
 ## Compilación
 
@@ -16,6 +16,5 @@ $ make
 ```
 cc -Wall -g   -I. -o ../cliente cliente.o 
 cc -Wall -g   -I. -o servidor servidor.o 
-
 ```
 
