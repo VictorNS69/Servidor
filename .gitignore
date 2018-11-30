@@ -1,3 +1,9 @@
 LICENCIA
 autores.txt
 #bitacora.txt
+cliente
+cliente_src/cliente.o
+puerto_servidor
+servidor
+servidor.o
+
