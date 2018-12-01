@@ -7,4 +7,7 @@ Bitacora de trabajo:
 	Tiempo de trabajo: 3 horas.
 	Nota = 0.
 	Se han cambiado todas las salidas estandar por salida error.
-	Nota = .
+	Nota = 0.
+
+01/12/2018
+	
