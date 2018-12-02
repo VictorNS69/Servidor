@@ -1,21 +1,9 @@
 /* Autor: Victor Nieves Sanchez
 * servidor: servidor pseudo FTP.
-*
-* Copyright (c) 2013,2018 DATSI. Francisco Rosales <frosal@fi.upm.es>
-* Todos los derechos reservados.
-*
-* Publicado bajo Licencia de Proyecto Educativo Práctico
-* <http://laurel.datsi.fi.upm.es/~ssoo/LICENCIA/LPEP>
-*
-* Queda prohibida la difusión total o parcial por cualquier
-* medio del material entregado al alumno para la realización
-* de este proyecto o de cualquier material derivado de este,
-* incluyendo la solución particular que desarrolle el alumno.
 */
 
 //includes enunciado
 #include <sys/types.h>
-//#include <sys/stat.h>
 #include <fcntl.h>
 #include <stdio.h>
 #include <unistd.h>
@@ -66,7 +54,7 @@ int main(int argc,char* argv[]){
   /* Escribimos el puerto de servicio */
   bzero((char *) &sin, sizeof(struct sockaddr_in));//reset
   getsockname(sUDP, (struct sockaddr *) &sin, &size);
-  Escribir_Puerto(ntohs((uint16_t) (int) sin.sin_port));
+  Escribir_Puerto(ntohs((int) sin.sin_port));
 
   /* Creacion del socket TCP de servicio */
   fprintf(stdout,"SERVIDOR: Creacion del socket TCP: ");
@@ -119,7 +107,7 @@ int main(int argc,char* argv[]){
     if(ntohl(msg.op) == QUIT/* msg QUIT*/){
       fprintf(stdout,"SERVIDOR: QUIT\n");
       msg.op = htonl(OK);
-      fprintf(stderr,"SERVIDOR: Enviando del resultado [OK]: ");
+      fprintf(stdout,"SERVIDOR: Enviando del resultado [OK]: ");
       result = sendto(sUDP, (char *) &msg, (size_t) msize, 0, (struct sockaddr *) &sin, size);
       if (result < 0)
         fprintf(stdout, "ERROR\n");

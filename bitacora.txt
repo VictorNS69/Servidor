@@ -17,7 +17,15 @@ Bitacora de trabajo:
 	Tiempo de trabajo: 3 horas aprox.
 	Nota = 0.
 	No enviaba bien las señales el servidor al cliente.
+	
+02/12/2018
 	Tiempo de trabajo: 1 hora aprox.
 	Nota = 0.
+	Había una stderr en lugar de stdout.
+	Tiempo de trabajo: 30 min aprox.
+	Nota = 100.
 
-NOTA FINAL: .
+03/12/2018
+	Se borran algunos comentarios innecesarios y se sube la entrega final.
+
+NOTA FINAL: 100 .
