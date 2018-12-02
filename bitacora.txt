@@ -16,5 +16,8 @@ Bitacora de trabajo:
 	Se ha implementado el envio de mensajes entre servidor y cliente.
 	Tiempo de trabajo: 3 horas aprox.
 	Nota = 0.
+	No enviaba bien las señales el servidor al cliente.
+	Tiempo de trabajo: 1 hora aprox.
+	Nota = 0.
 
 NOTA FINAL: .

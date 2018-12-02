@@ -64,9 +64,9 @@ int main(int argc,char* argv[]){
   fprintf(stdout, "OK\n");
 
   /* Escribimos el puerto de servicio */
-  bzero((char *) &sin, sizeof(struct sockaddr_in)); /* Pone a 0*/
+  bzero((char *) &sin, sizeof(struct sockaddr_in));//reset
   getsockname(sUDP, (struct sockaddr *) &sin, &size);
-  Escribir_Puerto(ntohs((uint16_t) (int) sin.sin_port) /* Numero de puerto asignado */);
+  Escribir_Puerto(ntohs((uint16_t) (int) sin.sin_port));
 
   /* Creacion del socket TCP de servicio */
   fprintf(stdout,"SERVIDOR: Creacion del socket TCP: ");
@@ -109,8 +109,8 @@ int main(int argc,char* argv[]){
     bzero(&msg, sizeof(UDP_Msg));
     msize = sizeof(UDP_Msg);
 
-    /* Recibo msg */
-    fprintf(stdout, "SERVIDOR: mensaje del cliente: ");
+    /* Recibo mensaje */
+    fprintf(stdout, "SERVIDOR: Mensaje del cliente: ");
     if (recvfrom(sUDP, (char *) &msg, (size_t) msize, 0, (struct sockaddr *) &sin, &size) < 0) {
       fprintf(stdout, "ERROR\n");
       break;
@@ -118,6 +118,7 @@ int main(int argc,char* argv[]){
     fprintf(stdout, "OK\n");
     if(ntohl(msg.op) == QUIT/* msg QUIT*/){
       fprintf(stdout,"SERVIDOR: QUIT\n");
+      msg.op = htonl(OK);
       fprintf(stderr,"SERVIDOR: Enviando del resultado [OK]: ");
       result = sendto(sUDP, (char *) &msg, (size_t) msize, 0, (struct sockaddr *) &sin, size);
       if (result < 0)
@@ -126,7 +127,7 @@ int main(int argc,char* argv[]){
         fprintf(stdout, "OK\n");
       break;
     }
-    else{
+    else if (ntohl(msg.op) == REQUEST) {
       fprintf(stdout,"SERVIDOR: REQUEST(%s,%s)\n", msg.local, msg.remoto);
 
       /* Envio del resultado */
@@ -134,10 +135,11 @@ int main(int argc,char* argv[]){
       if (file < 0) {
         fprintf(stdout,"SERVIDOR: Enviando del resultado [ERROR]: ");
         msg.op = htonl(ERROR);
-      } else {
+      }
+      else {
         fprintf(stdout,"SERVIDOR: Enviando del resultado [OK]: ");
         msg.op = htonl(OK);
-        msg.puerto = htons((uint16_t) pTCP);
+        msg.puerto = htons(pTCP);
       }
       result = sendto(sUDP, (char *) &msg, (size_t) msize, 0, (struct sockaddr *) &sin, size);
       if (result < 0)
@@ -148,7 +150,7 @@ int main(int argc,char* argv[]){
       /* Esperamos la llegada de una conexion */
       fprintf(stdout,"SERVIDOR: Llegada de un mensaje: ");
       if (msg.op == htonl(OK)) {
-        cs = accept(sTCP, (struct sockaddr *) &sin, &stdout);// STDOUT -> NULL?
+        cs = accept(sTCP, (struct sockaddr *) &sin, &size);
         if (cs < 0)
           fprintf(stdout, "ERROR\n");
         else
