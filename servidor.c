@@ -12,7 +12,6 @@
 
 //mis includes
 #include <arpa/inet.h>
-#include <netdb.h>
 
 void Escribir_Puerto (int puerto);
 
