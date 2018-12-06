@@ -38,7 +38,7 @@ int main(int argc,char* argv[]){
   fprintf(stdout, "OK\n");
 
   /* Asignacion de la direccion local (del servidor) Puerto UDP*/
-  bzero((char *) &sin, sizeof(sin));
+  bzero(&sin, sizeof(sin));
   sin.sin_family = AF_INET;
   sin.sin_addr.s_addr = inet_addr(HOST_SERVIDOR);
   sin.sin_port = htons(0);
@@ -51,9 +51,9 @@ int main(int argc,char* argv[]){
   fprintf(stdout, "OK\n");
 
   /* Escribimos el puerto de servicio */
-  bzero((char *) &sin, sizeof(struct sockaddr_in));//reset
+  bzero( &sin, sizeof(struct sockaddr_in));//reset
   getsockname(sUDP, (struct sockaddr *) &sin, &size);
-  Escribir_Puerto(ntohs((int) sin.sin_port));
+  Escribir_Puerto(ntohs( sin.sin_port));
 
   /* Creacion del socket TCP de servicio */
   fprintf(stdout,"SERVIDOR: Creacion del socket TCP: ");
@@ -74,7 +74,7 @@ int main(int argc,char* argv[]){
     exit(1);
   }
   fprintf(stdout, "OK\n");
-  bzero((char *) &sin, sizeof(struct sockaddr_in)); /* Pone a 0*/
+  bzero( &sin, sizeof(struct sockaddr_in)); /* Pone a 0*/
   getsockname(sTCP, (struct sockaddr *) &sin, &size);
   pTCP = htons(sin.sin_port);
 
@@ -91,14 +91,14 @@ int main(int argc,char* argv[]){
   fprintf(stdout,"SERVIDOR: Puerto TCP reservado: OK\n");
   while(1 /* Bucle de procesar peticiones */){
     fprintf(stdout,"SERVIDOR: Esperando mensaje.\n");
-    bzero((char *) &sin, sizeof(struct sockaddr_in));
+    bzero( &sin, sizeof(struct sockaddr_in));
     size = sizeof(sin);
     bzero(&msg, sizeof(UDP_Msg));
     msize = sizeof(UDP_Msg);
 
     /* Recibo mensaje */
     fprintf(stdout, "SERVIDOR: Mensaje del cliente: ");
-    if (recvfrom(sUDP, (char *) &msg, (size_t) msize, 0, (struct sockaddr *) &sin, &size) < 0) {
+    if (recvfrom(sUDP, &msg, msize, 0, (struct sockaddr *) &sin, &size) < 0) {
       fprintf(stdout, "ERROR\n");
       break;
     }
@@ -107,7 +107,7 @@ int main(int argc,char* argv[]){
       fprintf(stdout,"SERVIDOR: QUIT\n");
       msg.op = htonl(OK);
       fprintf(stdout,"SERVIDOR: Enviando del resultado [OK]: ");
-      result = sendto(sUDP, (char *) &msg, (size_t) msize, 0, (struct sockaddr *) &sin, size);
+      result = sendto(sUDP,  &msg,  msize, 0, (struct sockaddr *) &sin, size);
       if (result < 0)
         fprintf(stdout, "ERROR\n");
       else
@@ -128,7 +128,7 @@ int main(int argc,char* argv[]){
         msg.op = htonl(OK);
         msg.puerto = htons(pTCP);
       }
-      result = sendto(sUDP, (char *) &msg, (size_t) msize, 0, (struct sockaddr *) &sin, size);
+      result = sendto(sUDP, &msg,  msize, 0, (struct sockaddr *) &sin, size);
       if (result < 0)
         fprintf(stdout, "ERROR\n");
       else
@@ -142,7 +142,7 @@ int main(int argc,char* argv[]){
           fprintf(stdout, "ERROR\n");
         else
           fprintf(stdout, "OK\n");
-        while ((len = (size_t) read(file, buffer, 1024)) > 0)
+        while ((len = read(file, buffer, 1024)) > 0)
           write(cs, buffer, len);
         close(cs);
       }
