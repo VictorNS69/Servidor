@@ -1,6 +1,6 @@
 LICENCIA
 autores.txt
-#bitacora.txt
+bitacora.txt
 cliente
 cliente_src/cliente.o
 puerto_servidor
