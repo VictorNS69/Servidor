@@ -14,7 +14,12 @@
 $ make
 
 ```
+cd cliente_src/
+cc -Wall -g   -c cliente.c 
 cc -Wall -g   -I. -o ../cliente cliente.o 
+cd ../
+cc -Wall -g   -c servidor.c
 cc -Wall -g   -I. -o servidor servidor.o 
+
 ```
 
